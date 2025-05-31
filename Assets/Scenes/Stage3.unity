@@ -2915,7 +2915,7 @@ MonoBehaviour:
   timerText: {fileID: 813126093}
   GameOverPanel: {fileID: 948260791}
   time: 60
-  timerSound: {fileID: 0}
+  timerSound: {fileID: 8300000, guid: 1aea8e12c4f7b2d45a10980d79420280, type: 3}
 --- !u!4 &812393237
 Transform:
   m_ObjectHideFlags: 0
@@ -3690,7 +3690,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
