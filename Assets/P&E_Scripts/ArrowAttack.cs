@@ -66,26 +66,26 @@ public class ArrowAttack : MonoBehaviour
         //Invoke(nameof(FireArrow), attackDelay);
     }
 
-    //void FireArrow()
-    //{
-    //    if (arrowPrefab == null || arrowSpawnPoint == null || playerTarget == null)
-    //    {
-    //        isAttacking = false;
-    //        return;
-    //    }
-    //    Vector2 direction = (playerTarget.position - arrowSpawnPoint.position).normalized;
-    //    GameObject arrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, Quaternion.identity);
+    void FireArrow()
+    {
+        if (arrowPrefab == null || arrowSpawnPoint == null || playerTarget == null)
+        {
+            isAttacking = false;
+            return;
+        }
+        Vector2 direction = (playerTarget.position - arrowSpawnPoint.position).normalized;
+        GameObject arrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, Quaternion.identity);
 
-    //    // 바라보게
-    //    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    //    arrow.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        // 바라보게
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-    //    Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-    //    if (rb != null)
-    //    {
-    //        rb.velocity = direction * arrowSpeed;
-    //    }
+        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = direction * arrowSpeed;
+        }
 
-    //    isAttacking = false;
-    //}
+        isAttacking = false;
+    }
 }

@@ -9,13 +9,13 @@ public class PlayerKnockback : MonoBehaviour
 
     private Rigidbody2D rb;
     public bool isInvincible = false;
-    private PlayerController playerMovement;
+    //private PlayerController playerMovement;
     private SpriteRenderer spriteRenderer;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerMovement = GetComponent<PlayerController>(); // 조작 스크립트
+        //playerMovement = GetComponent<PlayerController>(); // 조작 스크립트
         spriteRenderer = GetComponent<SpriteRenderer>(); // 깜빡임을 위한 스프라이트
     }
 
@@ -33,8 +33,8 @@ public class PlayerKnockback : MonoBehaviour
         isInvincible = true;
 
         // 조작 비활성화
-        if (playerMovement != null)
-            playerMovement.enabled = false;
+        //if (playerMovement != null)
+            //playerMovement.enabled = false;
 
         // 넉백
         rb.velocity = Vector2.zero;
@@ -47,8 +47,8 @@ public class PlayerKnockback : MonoBehaviour
         yield return new WaitForSeconds(knockbackDuration);
 
         // 조작 다시 활성화
-        if (playerMovement != null)
-            playerMovement.enabled = true;
+        //if (playerMovement != null)
+            //playerMovement.enabled = true;
 
         // 무적 시간 끝까지 기다림
         yield return new WaitForSeconds(invincibleDuration - knockbackDuration);

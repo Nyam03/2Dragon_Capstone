@@ -611,7 +611,7 @@ MonoBehaviour:
   attackCooldown: 3
   attackDelay: 4
   arrowPrefab: {fileID: 958103870080459795, guid: 779365c7f038e204d8f38239145b92a2, type: 3}
-  arrowSpawnPoint: {fileID: 0}
+  arrowSpawnPoint: {fileID: 8336284944126664485}
   arrowSpeed: 20
   bowSound: {fileID: 8300000, guid: 36cdd2992c7f82743b0186f00a5cc5f3, type: 3}
 --- !u!82 &7832334454512644113
