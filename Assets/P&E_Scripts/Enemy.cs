@@ -63,7 +63,15 @@ public class Enemy : MonoBehaviour
 
         GameObject particleInstance = Instantiate(dieParticle, transform.position, Quaternion.identity);
         Destroy(particleInstance, 2f); // 파티클 복제본 제거
-
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.Heal(5); // 체력 회복
+            }
+        }
         Destroy(gameObject); // 적 오브젝트 제거
     }
 

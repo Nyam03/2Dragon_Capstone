@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -42,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             StartCoroutine(DelayGameOver());
-            AudioSource.PlayOneShot(deathSound2);
+            //AudioSource.PlayOneShot(deathSound);
         }
     }
 
@@ -84,4 +86,10 @@ public class PlayerHealth : MonoBehaviour
         flashRoutine = null;
     }
 
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthSlider.value = currentHealth;
+    }
 }

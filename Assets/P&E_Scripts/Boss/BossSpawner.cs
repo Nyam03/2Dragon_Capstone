@@ -99,7 +99,7 @@ public class BossSpawner : MonoBehaviour
 
     void LoadClearScene()
     {
-        SceneManager.LoadScene("ClearScene");
+        SceneManager.LoadScene("Ending");
     }
 
     public void ClearStage()

@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,12 +39,19 @@ public class Boss : MonoBehaviour
 
     private BossAttack bossAttack;
 
+    public Image jumpWarningImage; // Ï†êÌîÑ Í≥µÍ≤© Í≤ΩÍ≥† Ïù¥ÎØ∏ÏßÄ
+    private Coroutine warningBlinkCoroutine; // Ï†êÌîÑ Í≤ΩÍ≥† ÍπúÎπ°ÏûÑ ÏΩîÎ£®Ìã¥
+
+    public Image dropWarningImage; // ÎìúÎ°≠ Í≥µÍ≤© Í≤ΩÍ≥† Ïù¥ÎØ∏ÏßÄ
+    private Coroutine dropWarningCoroutine; // ÎìúÎ°≠ Í≤ΩÍ≥† ÍπúÎπ°ÏûÑ ÏΩîÎ£®Ìã¥
+
     public AudioClip deathSound;
-    public AudioClip slamSound;
+    public AudioClip dropWarningSound; // ÎìúÎ°≠Í≥µÍ≤© Í≤ΩÍ≥†Ïùå
+    public AudioClip jumpWarningSound; // Ï†êÌîÑÍ≥µÍ≤© Í≤ΩÍ≥†Ïùå
+    public AudioClip slamImpactSound;  // Ï∞©ÏßÄ ÏÇ¨Ïö¥Îìú
     private AudioSource audioSource;
 
-    //public GameObject slamEffectPrefab; // ¬¯¡ˆ ¿Ã∆Â∆Æ «¡∏Æ∆’
-
+    public Image bossHPFillImage;
 
     void Start()
     {
@@ -53,17 +60,31 @@ public class Boss : MonoBehaviour
         enemyHealth.maxValue = maxHealth;
         rb = GetComponent<Rigidbody2D>();
 
-        // SkeletonAnimation √ ±‚»≠
+        // SkeletonAnimation Ï¥àÍ∏∞Ìôî
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         if (skeletonAnimation != null)
         {
             spineAnimState = skeletonAnimation.AnimationState;
-            PlayAnimation("Idle", true); // Ω√¿€ ªÛ≈¬
+            PlayAnimation("Idle", true); // ÏãúÏûë ÏÉÅÌÉú   
         }
 
         dropArea = GameObject.Find("DropArea")?.GetComponent<Collider2D>();
         groundCollider = GameObject.Find("Ground")?.GetComponent<Collider2D>();
         bossAttack = GetComponentInChildren<BossAttack>();
+
+        GameObject warningObj = GameObject.Find("JumpWarningImage");
+        if (warningObj != null)
+            jumpWarningImage = warningObj.GetComponent<Image>();
+
+        GameObject dropWarningObj = GameObject.Find("DropWarningImage");
+        if (dropWarningObj != null)
+            dropWarningImage = dropWarningObj.GetComponent<Image>();
+
+        if (jumpWarningImage != null)
+            jumpWarningImage.enabled = false;
+
+        if (dropWarningImage != null)
+            dropWarningImage.enabled = false;
 
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
@@ -85,7 +106,8 @@ public class Boss : MonoBehaviour
 
             if (distance <= basicAttackRange)
             {
-                // ±‚∫ª ∞¯∞›¿∫ ∫∞µµ √≥∏Æ
+                // Í∏∞Î≥∏ Í≥µÍ≤©ÏùÄ Î≥ÑÎèÑ Ï≤òÎ¶¨
+
             }
             else if (distance <= specialAttackRange && Time.time >= lastSpecialAttackTime + specialAttackCooldown && (bossAttack == null || !bossAttack.IsPlayerInRange()))
             {
@@ -108,14 +130,29 @@ public class Boss : MonoBehaviour
         //    GameObject aura = Instantiate(auraEffectPrefab, transform.position, Quaternion.identity, transform);
         //    aura.transform.localPosition = Vector3.zero;
         //}
-        Debug.Log("2∆‰¿Ã¡Ó");
+
+        bossHPFillImage.color = new Color(0.5f, 0, 1, 0.8f);
+
+        Debug.Log("2ÌéòÏù¥Ï¶à");
     }
 
     IEnumerator DropAttack()
     {
-        Debug.Log("µÂ∑”∞¯∞›Ω««‡");
+        Debug.Log("ÎìúÎ°≠Í≥µÍ≤©Ïã§Ìñâ");
+
+        // ÎìúÎ°≠ Í≤ΩÍ≥† Ïù¥ÎØ∏ÏßÄ ÍπúÎπ°Ïù¥Í∏∞ (ÏúÑÏπò Î≥ÄÍ≤Ω ÏóÜÏù¥)
+        if (dropWarningImage != null)
+        {
+            dropWarningImage.enabled = true;
+            StartCoroutine(BlinkDropWarningImageForSeconds(2f)); // 2Ï¥àÍ∞Ñ ÍπúÎπ°Ïù¥Í∏∞
+
+            if (audioSource != null && dropWarningSound != null)
+                audioSource.PlayOneShot(dropWarningSound);
+        }
+
         yield return new WaitForSeconds(0.5f);
 
+        // ÎìúÎ°≠ Í≥µÍ≤© Ïã§Ìñâ
         if (dropArea == null) yield break;
 
         Bounds bounds = dropArea.bounds;
@@ -154,28 +191,39 @@ public class Boss : MonoBehaviour
         }
     }
 
+
     IEnumerator SlamAttack()
     {
-        Debug.Log("¡°«¡∞¯∞›Ω««‡");
+        Debug.Log("Ï†êÌîÑÍ≥µÍ≤©Ïã§Ìñâ");
         PlayAnimation("Gap", false);
-
+ 
         if (rb != null)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-
-        yield return new WaitUntil(() => rb.IsTouching(groundCollider) && rb.velocity.y <= 0f);
-        //if (slamEffectPrefab != null)
-        //{
-        //    Instantiate(slamEffectPrefab, transform.position, Quaternion.identity);
-        //}
-        if (slamSound != null && audioSource != null)
+        if (jumpWarningImage != null)
         {
-            audioSource.PlayOneShot(slamSound);
+            jumpWarningImage.enabled = true;
+            warningBlinkCoroutine = StartCoroutine(BlinkWarningImage());
+
+            if (audioSource != null && jumpWarningSound != null)
+                audioSource.PlayOneShot(jumpWarningSound);
         }
 
-        CameraShake.Instance.Shake(0.3f, 0.5f);
+        //                  
+        yield return new WaitUntil(() => rb.IsTouching(groundCollider) && rb.velocity.y <= 0f);
 
+        if (audioSource != null && slamImpactSound != null)
+            audioSource.PlayOneShot(slamImpactSound);
+
+        if (warningBlinkCoroutine != null)
+            StopCoroutine(warningBlinkCoroutine);
+
+        if (jumpWarningImage != null)
+            jumpWarningImage.enabled = false;
+   
+        CameraShake.Instance.Shake(0.3f, 0.5f);
+ 
         Collider2D playerCollider = player.GetComponent<Collider2D>();
         if (playerCollider != null && groundCollider != null && playerCollider.IsTouching(groundCollider))
         {
@@ -191,7 +239,7 @@ public class Boss : MonoBehaviour
                 Vector2 knockDir = (player.position - transform.position).normalized;
                 knockback.SendMessage("HandleKnockback", knockDir, SendMessageOptions.DontRequireReceiver);
             }
-        }
+        }    
         PlayAnimation("Idle", true);
     }
 
@@ -201,7 +249,7 @@ public class Boss : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         enemyHealth.value = currentHealth;
 
-        Debug.Log("∫∏Ω∫∞° ««∞›µ ! ≥≤¿∫ √º∑¬: " + currentHealth);
+        Debug.Log("Î≥¥Ïä§Í∞Ä ÌîºÍ≤©Îê®! ÎÇ®ÏùÄ Ï≤¥Î†•: " + currentHealth);
 
         if (bossAttack == null || !bossAttack.IsCurrentlyAttacking())
         {
@@ -210,7 +258,7 @@ public class Boss : MonoBehaviour
         }
 
         Vector2 knockDir = (transform.position - player.position).normalized;
-       // GetComponent<EnemyKnockback>().TakeKnockback(knockDir);
+        // GetComponent<EnemyKnockback>().TakeKnockback(knockDir);
 
         StartCoroutine(HitStun());
 
@@ -230,10 +278,11 @@ public class Boss : MonoBehaviour
     void Die()
     {
         audioSource.PlayOneShot(deathSound);
-        Debug.Log("∫∏Ω∫∞° ªÁ∏¡«‘!");
+        Debug.Log("Î≥¥Ïä§Í∞Ä ÏÇ¨ÎßùÌï®!");
+
         PlayAnimation("Death", false);
         if (deathSound != null)
-        BossSpawner.Instance?.OnBossDefeated(gameObject);
+            BossSpawner.Instance?.OnBossDefeated(gameObject);
         GameObject particleInstance = Instantiate(dieParticle, transform.position, Quaternion.identity);
         Destroy(particleInstance, 2f);
         Destroy(gameObject, 3.0f);
@@ -251,6 +300,34 @@ public class Boss : MonoBehaviour
     public bool IsPhase2()
     {
         return isPhase2;
+    }
+
+
+    IEnumerator BlinkWarningImage()
+    {
+        while (true)
+        {
+            if (jumpWarningImage != null)
+                jumpWarningImage.enabled = !jumpWarningImage.enabled;
+
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    IEnumerator BlinkDropWarningImageForSeconds(float duration)
+    {
+        float timer = 0f;
+        while (timer < duration)
+        {
+            if (dropWarningImage != null)
+                dropWarningImage.enabled = !dropWarningImage.enabled;
+
+            yield return new WaitForSeconds(0.3f); // ÍπúÎπ°Ïù¥Îäî Í∞ÑÍ≤© Ï°∞Ï†à Í∞ÄÎä•
+            timer += 0.3f;
+        }
+
+        if (dropWarningImage != null)
+            dropWarningImage.enabled = false; // ÍπúÎπ°ÏûÑ ÎÅùÎÇòÍ≥† ÎÅî
     }
 
 }

@@ -1021,7 +1021,7 @@ AudioSource:
   m_GameObject: {fileID: 221986560}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: e8cac97681bd4ce4482543b398a9db34, type: 2}
   m_audioClip: {fileID: 8300000, guid: 179828e51604ec743816bd32c1474cc7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.08
@@ -2866,6 +2866,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621803938}
   m_CullTransparentMesh: 1
+--- !u!1 &623156891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 623156893}
+  - component: {fileID: 623156892}
+  m_Layer: 0
+  m_Name: BGMController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &623156892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623156891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fafec1b32bd261d4cbe00dc838446405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: e8cac97681bd4ce4482543b398a9db34, type: 2}
+  bgmSlider: {fileID: 2043035127}
+--- !u!4 &623156893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623156891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2783.4822, y: 601.23627, z: 5.0944843}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &623271930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,7 +3012,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 112
   m_TargetDisplay: 0
 --- !u!1 &626085563
 GameObject:
@@ -3048,7 +3094,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 112
   m_TargetDisplay: 0
 --- !u!224 &626085567
 RectTransform:
@@ -3894,7 +3940,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -14.976223, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3905,7 +3951,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 30.952446, y: 1}
   m_EdgeRadius: 0
 --- !u!4 &855300359
 Transform:
@@ -5964,7 +6010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6027176312696374660, guid: 4cb6c6a9a9962b0479d47e1269e577b0, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6027176312696374660, guid: 4cb6c6a9a9962b0479d47e1269e577b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6984,7 +7030,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 14.951099, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6995,7 +7041,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 30.902199, y: 1}
   m_EdgeRadius: 0
 --- !u!4 &1615592110
 Transform:
@@ -7203,7 +7249,7 @@ AudioSource:
   m_GameObject: {fileID: 1710866523}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: e8cac97681bd4ce4482543b398a9db34, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.4
@@ -9319,7 +9365,7 @@ AudioSource:
   m_GameObject: {fileID: 162072748025347019}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: e8cac97681bd4ce4482543b398a9db34, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.3
@@ -9503,6 +9549,7 @@ BoxCollider2D:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 623156893}
   - {fileID: 1710866526}
   - {fileID: 587382313}
   - {fileID: 780834444}
@@ -9511,13 +9558,13 @@ SceneRoots:
   - {fileID: 1037304574}
   - {fileID: 1769910637}
   - {fileID: 941766025}
+  - {fileID: 1504014099}
+  - {fileID: 623271931}
   - {fileID: 1695150547}
   - {fileID: 1615045828}
   - {fileID: 855300359}
-  - {fileID: 1615592110}
   - {fileID: 1479031596}
   - {fileID: 626085567}
-  - {fileID: 623271931}
   - {fileID: 8387884082064338320}
+  - {fileID: 1615592110}
   - {fileID: 812393237}
-  - {fileID: 1504014099}
