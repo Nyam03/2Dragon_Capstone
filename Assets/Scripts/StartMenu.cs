@@ -35,4 +35,9 @@ public class StartMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Stage3");
     }
+
+    public void MainScene()
+    {
+        SceneManager.LoadScene("Main");
+    }
 }
